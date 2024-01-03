@@ -1,9 +1,13 @@
 import { propertyForSaleArr } from "./properties/data.js";
+import { placeholderPropertyObj } from "./properties/datahold.js";
 
-function getPropertyHtml(propertyArr) {
+function getPropertyHtml(propertyArr = [placeholderPropertyObj]) {
   return propertyArr
     .map(function (property) {
       const { propertyLocation, priceGBP, roomsM2, comment, image } = property;
+      const totalRoomSizeM2 = roomsM2.reduce(function (total, current) {
+        return total + current;
+      }, 0);
       return `
    <section class="card">
                 <img src="/images/${image}">
@@ -11,7 +15,7 @@ function getPropertyHtml(propertyArr) {
                     <h2>${propertyLocation}</h2>
                     <h3>${priceGBP}</h3>
                     <p>${comment}</p>
-                    <h3>${roomsM2} m&sup2;</h3>
+                    <h3>${totalRoomSizeM2} m&sup2;</h3>
                 </div>
             </section>
    `;
